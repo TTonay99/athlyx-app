@@ -1,0 +1,24 @@
+{
+  "name": "Athlyx · Nutrición personal",
+  "short_name": "Athlyx",
+  "description": "Tu diario personal de nutrición",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0c100f",
+  "theme_color": "#101312",
+  "icons": [
+    {
+      "src": "athlyx-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "athlyx-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

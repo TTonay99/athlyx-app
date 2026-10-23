@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101312">
+<meta name="description" content="Athlyx, tu diario personal de nutrición.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="athlyx-192.png">
+<title>Athlyx · Nutrición</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--bg:#0c100f;--panel:#151b19;--panel2:#1c2421;--line:#2a3530;--text:#f2f7f3;--muted:#9baaa1;--accent:#b7f36b;--accent2:#d9ffab;--danger:#ff7777;--radius:20px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#18221b 0%,var(--bg) 48%);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer}
+.app{max-width:980px;margin:0 auto;padding:env(safe-area-inset-top) 16px calc(88px + env(safe-area-inset-bottom))}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 2px 20px}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:40px;height:40px;border-radius:14px;background:var(--accent);color:#11180d;display:grid;place-items:center;font-weight:950;font-size:22px;box-shadow:0 0 28px #b7f36b22}.brandname{font-weight:850;letter-spacing:.4px;font-size:22px}.brandname span{color:var(--accent)}.eyebrow{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.iconbtn{border:1px solid var(--line);background:var(--panel);color:var(--text);width:42px;height:42px;border-radius:14px;font-size:19px}
+h1{font-size:29px;letter-spacing:-1px;margin:4px 0 5px}h2{font-size:17px;margin:0}p{color:var(--muted);line-height:1.45}.date-row{display:flex;align-items:center;justify-content:space-between;margin:8px 0 18px}.date-row p{margin:0;font-size:13px}
+.hero{background:linear-gradient(140deg,#263725,#17211b 70%);border:1px solid #3c5136;border-radius:26px;padding:20px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;border:1px solid #b7f36b20;right:-60px;top:-72px;box-shadow:0 0 0 20px #b7f36b08,0 0 0 42px #b7f36b05}.hero-top{display:flex;justify-content:space-between;gap:12px;position:relative;z-index:1}.hero .label{color:#c1d1c3;font-size:13px}.remaining{font-size:42px;font-weight:850;letter-spacing:-2px;margin:8px 0 2px}.remaining small{font-size:14px;letter-spacing:0;color:var(--muted);font-weight:500}.pill{background:#b7f36b1c;color:var(--accent2);padding:7px 10px;border-radius:999px;font-size:12px;white-space:nowrap;height:max-content}.progress{height:8px;border-radius:99px;background:#ffffff18;overflow:hidden;margin:15px 0 7px}.progress span{display:block;height:100%;background:var(--accent);border-radius:99px;width:0;transition:width .25s}.subline{display:flex;justify-content:space-between;color:#c0cdc4;font-size:12px}
+.macros{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:13px 0 24px}.macro{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px 12px}.macrohead{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}.dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}.dot.p{background:#a89cff}.dot.c{background:#ffbd69}.macroval{font-size:21px;font-weight:800;margin:9px 0 3px}.macrofoot{font-size:11px;color:var(--muted)}
+.sectionhead{display:flex;align-items:center;justify-content:space-between;margin:22px 2px 12px}.textbtn{background:none;border:0;color:var(--accent);font-weight:700;font-size:13px;padding:8px 0}.meal{background:var(--panel);border:1px solid var(--line);border-radius:18px;margin-bottom:10px;overflow:hidden}.mealhead{display:flex;align-items:center;gap:12px;padding:14px}.mealicon{width:42px;height:42px;background:var(--panel2);border-radius:14px;display:grid;place-items:center;font-size:21px}.mealinfo{flex:1;min-width:0}.mealname{font-weight:750;font-size:14px}.mealmeta{font-size:12px;color:var(--muted);margin-top:4px}.mealcal{font-weight:800;font-size:14px;text-align:right}.mealcal small{display:block;color:var(--muted);font-size:10px;font-weight:500;margin-top:3px}.foodrow{display:flex;align-items:center;gap:10px;padding:11px 14px;border-top:1px solid var(--line);font-size:13px}.foodrow .foodtext{flex:1;min-width:0}.foodrow .foodtext small{display:block;color:var(--muted);margin-top:3px}.remove{border:0;background:transparent;color:var(--muted);font-size:19px;padding:4px 6px}
+.addwide{width:100%;border:1px dashed #465648;border-radius:17px;background:#b7f36b09;color:var(--accent);padding:15px;font-weight:750;margin:4px 0 18px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#0e1312ed;backdrop-filter:blur(18px);border-top:1px solid var(--line);display:flex;justify-content:center;padding:9px 10px calc(9px + env(safe-area-inset-bottom));z-index:5}.navinner{display:flex;max-width:650px;width:100%;justify-content:space-around}.nav button{background:none;border:0;color:var(--muted);display:flex;flex-direction:column;gap:4px;align-items:center;font-size:10px;padding:4px 15px}.nav button strong{font-size:20px;font-weight:500}.nav button.active{color:var(--accent)}
+.page{display:none}.page.active{display:block}
+.formcard{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:18px;margin:14px 0}.field{display:flex;flex-direction:column;gap:7px;margin:13px 0}.field label{font-size:12px;color:var(--muted)}.field input,.field select{background:#0e1312;border:1px solid var(--line);border-radius:12px;color:var(--text);padding:13px;outline:none;width:100%}.field input:focus,.field select:focus{border-color:var(--accent)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.primary{background:var(--accent);border:0;color:#17200f;border-radius:13px;padding:13px 16px;font-weight:850;width:100%;margin-top:8px}.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:13px;padding:12px 14px;font-weight:700}.smallmuted{font-size:12px;color:var(--muted)}.empty{padding:22px;text-align:center;color:var(--muted);font-size:13px}.historyday{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0;display:flex;justify-content:space-between;gap:12px}.historyday b{font-size:14px}.historyday small{display:block;color:var(--muted);margin-top:5px}.toast{position:fixed;bottom:94px;left:50%;transform:translateX(-50%);background:#e9ffd2;color:#17200f;padding:11px 16px;border-radius:12px;font-size:13px;font-weight:750;display:none;z-index:10;box-shadow:0 8px 30px #0006;max-width:90vw}.settingsrow{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.settingsrow:last-child{border-bottom:0}.searchbar{display:flex;gap:8px}.searchbar input{flex:1;min-width:0;background:#0e1312;border:1px solid var(--line);border-radius:12px;color:var(--text);padding:13px}.searchresults{display:grid;gap:10px;margin-top:12px}.resultcard{display:flex;gap:12px;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:15px;padding:12px}.resultimg{width:54px;height:54px;flex:0 0 54px;border-radius:10px;object-fit:contain;background:#fff}.resultinfo{flex:1;min-width:0}.resultinfo b{display:block;font-size:13px;overflow-wrap:anywhere}.resultinfo small{display:block;color:var(--muted);font-size:11px;line-height:1.45;margin-top:4px}.resultcard button{flex:0 0 auto;padding:10px 11px}.searchnote{font-size:11px;color:var(--muted);line-height:1.5}.resultstate{padding:14px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--muted);font-size:13px}.settingsrow span{color:var(--muted);font-size:13px}.scanbox{border:1px solid var(--line);background:#0e1312;border-radius:16px;padding:12px;margin-top:12px}.scanvideo{width:100%;max-height:320px;object-fit:cover;border-radius:12px;background:#000;display:none}.scancontrols{display:flex;gap:8px;flex-wrap:wrap}.scancontrols button{flex:1;min-width:120px}.barcodeinput{display:flex;gap:8px}.barcodeinput input{min-width:0;flex:1;background:#0e1312;border:1px solid var(--line);border-radius:12px;color:var(--text);padding:12px}.scanstatus{font-size:12px;color:var(--muted);line-height:1.5;margin:8px 0}.scannerline{height:2px;background:var(--accent);box-shadow:0 0 12px var(--accent);margin-top:-2px;position:relative;display:none}
+@media(min-width:700px){.app{padding-left:28px;padding-right:28px}.dashboardgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.dashboardgrid .leftcol,.dashboardgrid .rightcol{min-width:0}.hero{padding:25px}.remaining{font-size:50px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><div class="logo">A</div><div><div class="brandname">athlyx<span>.</span></div><div class="eyebrow">NUTRICIÓN PERSONAL</div></div></div><button class="iconbtn" id="settingsShortcut" aria-label="Ajustes">⚙</button></header>
+
+<section class="page active" id="dashboardPage">
+<div class="date-row"><div><div class="eyebrow">TU RESUMEN</div><h1>Hola, vamos con todo.</h1><p id="todayLabel">Tu progreso de hoy</p></div><div class="pill" id="dayPill">HOY</div></div>
+<div class="dashboardgrid">
+<div class="leftcol">
+<div class="hero"><div class="hero-top"><div><div class="label">Calorías restantes</div><div class="remaining" id="remaining">2.000 <small>kcal</small></div></div><div class="pill" id="caloriePill">0% usado</div></div><div class="progress"><span id="calorieProgress"></span></div><div class="subline"><span id="consumedText">0 kcal consumidas</span><span id="goalText">Meta 2.000</span></div></div>
+<div class="sectionhead"><h2>Macronutrientes</h2><button class="textbtn" data-page="settings">Editar metas ↗</button></div>
+<div class="macros">
+<div class="macro"><div class="macrohead"><i class="dot p"></i>Proteína</div><div class="macroval" id="proteinVal">0 g</div><div class="macrofoot" id="proteinGoal">Meta 130 g</div></div>
+<div class="macro"><div class="macrohead"><i class="dot c"></i>Carbos</div><div class="macroval" id="carbsVal">0 g</div><div class="macrofoot" id="carbsGoal">Meta 220 g</div></div>
+<div class="macro"><div class="macrohead"><i class="dot"></i>Grasas</div><div class="macroval" id="fatVal">0 g</div><div class="macrofoot" id="fatGoal">Meta 65 g</div></div>
+</div>
+</div>
+<div class="rightcol">
+<div class="sectionhead" style="margin-top:2px"><h2>Tu diario</h2><span class="smallmuted" id="mealCount">0 alimentos</span></div>
+<div id="mealList"></div>
+<button class="addwide" id="addFoodBtn">＋ Añadir alimento</button>
+<div class="formcard"><div class="sectionhead" style="margin:0 0 5px"><h2>💧 Agua</h2><span class="smallmuted"><b id="waterCount">0</b> / <span id="waterGoal">8</span> vasos</span></div><div class="progress"><span id="waterProgress"></span></div><div style="display:flex;gap:8px;margin-top:12px"><button class="secondary" id="waterMinus">−</button><button class="secondary" id="waterPlus" style="flex:1">＋ Añadir vaso</button><button class="secondary" id="waterReset">Reiniciar</button></div></div>
+</div></div>
+</section>
+
+<section class="page" id="addPage">
+<div class="eyebrow">DIARIO ALIMENTARIO</div><h1>Añadir alimento</h1><p>Buscá un alimento y cargá sus nutrientes automáticamente, o completalos manualmente.</p>
+<div class="formcard" id="foodSearchCard">
+  <div class="sectionhead" style="margin:0 0 10px"><h2>🔎 Buscar alimentos</h2><span class="smallmuted">Etapa 2</span></div>
+  <div class="searchbar"><input id="foodSearchInput" type="search" maxlength="80" placeholder="Ej. banana, arroz, yogur..." aria-label="Buscar alimento"><button class="secondary" id="foodSearchBtn" type="button">Buscar</button></div>
+  <div class="searchnote" style="margin-top:9px">Buscá alimentos comunes o productos envasados. Los alimentos comunes usan valores aproximados; los productos se consultan en Open Food Facts. Revisá los datos antes de guardar.</div>
+  <div class="scanbox">
+    <div class="sectionhead" style="margin:0 0 8px"><h2>▦ Escanear código de barras</h2><span class="smallmuted">Etapa 3</span></div>
+    <div class="scancontrols"><button class="secondary" id="startScanBtn" type="button">Abrir cámara</button><button class="secondary" id="stopScanBtn" type="button" disabled>Detener cámara</button></div>
+    <video id="scanVideo" class="scanvideo" playsinline muted></video><div id="scanStatus" class="scanstatus">Para usar la cámara en iPhone, primero publicá Athlyx con HTTPS. También podés escribir el código manualmente.</div>
+    <div class="barcodeinput"><input id="barcodeInput" inputmode="numeric" autocomplete="off" maxlength="30" placeholder="Código de barras (EAN/UPC)" aria-label="Código de barras"><button class="secondary" id="lookupBarcodeBtn" type="button">Buscar código</button></div>
+  </div>
+  <div id="foodSearchResults" class="searchresults"><div class="resultstate">Escribí un alimento y tocá Buscar, o escaneá un código.</div></div>
+</div>
+<form class="formcard" id="foodForm">
+<div class="field"><label for="foodName">Nombre del alimento</label><input id="foodName" required maxlength="80" placeholder="Ej. Avena con leche"></div>
+<div class="grid2"><div class="field"><label for="mealType">Comida</label><select id="mealType"><option value="Desayuno">Desayuno</option><option value="Almuerzo">Almuerzo</option><option value="Merienda">Merienda</option><option value="Cena">Cena</option><option value="Snack">Snack</option></select></div><div class="field"><label for="foodAmount">Porción (texto)</label><input id="foodAmount" maxlength="40" placeholder="Ej. 1 taza / 100 g"></div></div>
+<div class="field"><label for="foodCalories">Calorías (kcal)</label><input id="foodCalories" type="number" min="0" max="10000" step="1" required placeholder="Ej. 250"></div>
+<div class="grid2"><div class="field"><label for="foodProtein">Proteína (g)</label><input id="foodProtein" type="number" min="0" max="1000" step="0.1" value="0" required></div><div class="field"><label for="foodCarbs">Carbohidratos (g)</label><input id="foodCarbs" type="number" min="0" max="1000" step="0.1" value="0" required></div></div>
+<div class="grid2"><div class="field"><label for="foodFat">Grasas (g)</label><input id="foodFat" type="number" min="0" max="1000" step="0.1" value="0" required></div><div class="field"><label for="foodDate">Fecha</label><input id="foodDate" type="date" required></div></div>
+<button class="primary" type="submit">Guardar alimento</button></form>
+<div class="formcard"><h2>ℹ️ Sobre los datos</h2><p class="smallmuted">La base de productos es colaborativa y puede contener datos incompletos o incorrectos. Los alimentos genéricos son estimaciones por 100 g, no una medición exacta. Para productos envasados, priorizá la etiqueta del envase cuando haya diferencias.</p></div>
+</section>
+
+<section class="page" id="historyPage">
+<div class="eyebrow">CONSTANCIA, NO PERFECCIÓN</div><h1>Tu historial</h1><p>Revisá los días que registraste. Los registros permanecen en este navegador.</p><div id="historyList"></div><button class="secondary" id="exportBtn" style="width:100%;margin-top:12px">Exportar mis datos (JSON)</button><p class="smallmuted">Exportá una copia de seguridad periódicamente. Borrar los datos del navegador puede eliminar tu diario.</p>
+</section>
+
+<section class="page" id="settingsPage">
+<div class="eyebrow">PERSONALIZACIÓN</div><h1>Tus objetivos</h1><p>Definí metas diarias. Son objetivos editables, no recomendaciones médicas.</p>
+<form class="formcard" id="settingsForm">
+<div class="field"><label for="goalCalories">Meta de calorías (kcal/día)</label><input id="goalCalories" type="number" min="500" max="10000" required></div>
+<div class="grid2"><div class="field"><label for="goalProtein">Proteína (g)</label><input id="goalProtein" type="number" min="0" max="1000" required></div><div class="field"><label for="goalCarbs">Carbohidratos (g)</label><input id="goalCarbs" type="number" min="0" max="1000" required></div></div>
+<div class="field"><label for="goalFat">Grasas (g)</label><input id="goalFat" type="number" min="0" max="1000" required></div>
+<div class="field"><label for="goalWater">Meta de agua (vasos)</label><input id="goalWater" type="number" min="1" max="30" required></div>
+<button class="primary" type="submit">Guardar objetivos</button></form>
+<div class="formcard"><h2>Datos y privacidad</h2><p>Esta versión guarda los registros en el almacenamiento local del navegador. No tiene cuenta ni envía tus comidas a un servidor.</p><button class="secondary" id="clearDataBtn" style="color:var(--danger);width:100%">Borrar todos mis datos</button></div>
+</section>
+</div>
+
+<nav class="nav"><div class="navinner">
+<button class="active" data-page="dashboard"><strong>⌂</strong>Inicio</button>
+<button data-page="add"><strong>＋</strong>Registrar</button>
+<button data-page="history"><strong>▤</strong>Historial</button>
+<button data-page="settings"><strong>⚙</strong>Ajustes</button>
+</div></nav>
+<div class="toast" id="toast"></div>
+<script>
+const KEY='athlyx_v1_data';
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const defaults={goals:{calories:2000,protein:130,carbs:220,fat:65,water:8},foods:[],water:{},};
+let state;
+try{state={...defaults,...JSON.parse(localStorage.getItem(KEY)||'{}')};state.goals={...defaults.goals,...(state.goals||{})};state.foods=Array.isArray(state.foods)?state.foods:[];state.water=state.water||{}}catch(e){state=structuredClone(defaults)}
+const $=id=>document.getElementById(id);
+const fmt=n=>Math.round(Number(n)||0).toLocaleString('es-UY');
+const num=id=>Math.max(0,Number($(id).value)||0);
+function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+function toast(msg){$('toast').textContent=msg;$('toast').style.display='block';clearTimeout(window._toast);window._toast=setTimeout(()=>$('toast').style.display='none',2200)}
+function sums(date=today()){return state.foods.filter(f=>f.date===date).reduce((a,f)=>{a.calories+=f.calories;a.protein+=f.protein;a.carbs+=f.carbs;a.fat+=f.fat;a.count++;return a},{calories:0,protein:0,carbs:0,fat:0,count:0})}
+const meals=[['Desayuno','☀️'],['Almuerzo','🥗'],['Merienda','☕'],['Cena','🌙'],['Snack','🍎']];
+
+// Valores genéricos aproximados por 100 g. Son una ayuda inicial; pueden variar según preparación y marca.
+const COMMON_FOODS=[
+ {name:'Arroz blanco cocido',calories:130,protein:2.7,carbs:28.2,fat:0.3,category:'Alimento común'},
+ {name:'Arroz blanco crudo',calories:365,protein:7.1,carbs:80,fat:0.7,category:'Alimento común'},
+ {name:'Pechuga de pollo cocida sin piel',calories:165,protein:31,carbs:0,fat:3.6,category:'Alimento común'},
+ {name:'Huevo entero cocido',calories:155,protein:12.6,carbs:1.1,fat:10.6,category:'Alimento común'},
+ {name:'Banana',calories:89,protein:1.1,carbs:22.8,fat:0.3,category:'Alimento común'},
+ {name:'Manzana con cáscara',calories:52,protein:0.3,carbs:13.8,fat:0.2,category:'Alimento común'},
+ {name:'Avena seca',calories:389,protein:16.9,carbs:66.3,fat:6.9,category:'Alimento común'},
+ {name:'Leche entera',calories:61,protein:3.2,carbs:4.8,fat:3.3,category:'Alimento común'},
+ {name:'Leche descremada',calories:34,protein:3.4,carbs:5,fat:0.1,category:'Alimento común'},
+ {name:'Yogur natural entero',calories:61,protein:3.5,carbs:4.7,fat:3.3,category:'Alimento común'},
+ {name:'Pan blanco',calories:266,protein:8.9,carbs:49,fat:3.2,category:'Alimento común'},
+ {name:'Pan integral',calories:247,protein:13,carbs:41,fat:4.2,category:'Alimento común'},
+ {name:'Papa hervida',calories:87,protein:1.9,carbs:20.1,fat:0.1,category:'Alimento común'},
+ {name:'Pasta cocida',calories:157,protein:5.8,carbs:30.9,fat:0.9,category:'Alimento común'},
+ {name:'Carne vacuna magra cocida',calories:217,protein:26,carbs:0,fat:12,category:'Alimento común'},
+ {name:'Atún al natural escurrido',calories:116,protein:25.5,carbs:0,fat:0.8,category:'Alimento común'},
+ {name:'Lentejas cocidas',calories:116,protein:9,carbs:20.1,fat:0.4,category:'Alimento común'},
+ {name:'Tomate crudo',calories:18,protein:0.9,carbs:3.9,fat:0.2,category:'Alimento común'},
+ {name:'Palta',calories:160,protein:2,carbs:8.5,fat:14.7,category:'Alimento común'},
+ {name:'Aceite de oliva',calories:884,protein:0,carbs:0,fat:100,category:'Alimento común'},
+ {name:'Queso mozzarella',calories:280,protein:28,carbs:3.1,fat:17,category:'Alimento común'},
+ {name:'Maní tostado',calories:585,protein:24.4,carbs:21.3,fat:49.7,category:'Alimento común'},
+ {name:'Azúcar',calories:387,protein:0,carbs:100,fat:0,category:'Alimento común'},
+ {name:'Frutilla',calories:32,protein:0.7,carbs:7.7,fat:0.3,category:'Alimento común'}
+];
+function normalizeText(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim()}
+function numberOrZero(v){const n=Number(v);return Number.isFinite(n)&&n>0?n:0}
+function nutrientValue(n,keys){for(const key of keys){if(n&&n[key]!==undefined&&n[key]!==null&&n[key]!==''&&Number.isFinite(Number(n[key])))return Number(n[key])}return 0}
+function renderSearchState(message){$('foodSearchResults').innerHTML='';const el=document.createElement('div');el.className='resultstate';el.textContent=message;$('foodSearchResults').append(el)}
+function createResultCard(item){
+ const card=document.createElement('div');card.className='resultcard';
+ if(item.image){const img=document.createElement('img');img.className='resultimg';img.loading='lazy';img.alt='';img.src=item.image;img.onerror=()=>img.remove();card.append(img)}
+ const info=document.createElement('div');info.className='resultinfo';const title=document.createElement('b');title.textContent=item.name;const small=document.createElement('small');small.textContent=`${item.category||'Producto'} · ${Math.round(item.calories)} kcal · P ${item.protein.toFixed(1)} g · C ${item.carbs.toFixed(1)} g · G ${item.fat.toFixed(1)} g por 100 g`;info.append(title,small);card.append(info);
+ const btn=document.createElement('button');btn.type='button';btn.className='secondary';btn.textContent='Usar';btn.addEventListener('click',()=>useSearchFood(item));card.append(btn);return card;
+}
+function useSearchFood(item){
+ $('foodName').value=item.name;$('foodAmount').value='100 g';$('foodCalories').dataset.per100=String(item.calories);$('foodProtein').dataset.per100=String(item.protein);$('foodCarbs').dataset.per100=String(item.carbs);$('foodFat').dataset.per100=String(item.fat);$('foodCalories').value=Math.round(item.calories);$('foodProtein').value=Number(item.protein.toFixed(1));$('foodCarbs').value=Number(item.carbs.toFixed(1));$('foodFat').value=Number(item.fat.toFixed(1));
+ $('foodAmount').dataset.base='100';$('foodAmount').dataset.autofill='true';
+ $('foodForm').scrollIntoView({behavior:'smooth',block:'start'});toast('Datos cargados por 100 g; ajustá la porción y revisá los valores.');
+}
+function applyGramsToNutrition(){
+ const amountEl=$('foodAmount');if(amountEl.dataset.autofill!=='true')return;
+ const match=amountEl.value.match(/^\s*(\d+(?:[.,]\d+)?)\s*g\s*$/i);if(!match)return;
+ const grams=Number(match[1].replace(',','.'));const base=Number(amountEl.dataset.base)||100;if(!Number.isFinite(grams)||grams<0||base<=0)return;
+ const factor=grams/base;['foodCalories','foodProtein','foodCarbs','foodFat'].forEach(id=>{const el=$(id);const baseValue=Number(el.dataset.per100);if(Number.isFinite(baseValue))el.value=(baseValue*factor).toFixed(id==='foodCalories'?0:1)});
+}
+$('foodAmount').addEventListener('input',applyGramsToNutrition);
+async function searchFoods(){
+ const query=$('foodSearchInput').value.trim();if(query.length<2){renderSearchState('Escribí al menos 2 letras para buscar.');return}
+ const btn=$('foodSearchBtn');btn.disabled=true;btn.textContent='Buscando…';renderSearchState('Buscando alimentos comunes y productos online…');
+ try{
+   const q=normalizeText(query);const common=COMMON_FOODS.filter(f=>normalizeText(f.name).includes(q)||q.split(/\s+/).every(term=>normalizeText(f.name).includes(term))).slice(0,8).map(f=>({...f,source:'common'}));
+   // Se consulta solo al pulsar Buscar: Open Food Facts limita las búsquedas y no conviene consultar en cada tecla.
+   const url='https://world.openfoodfacts.org/cgi/search.pl?search_terms='+encodeURIComponent(query)+'&search_simple=1&action=process&json=1&page_size=12&fields='+encodeURIComponent('product_name,brands,code,nutriments,quantity,image_front_small_url');
+   let products=[];let onlineMessage='';
+   try{
+     const response=await fetch(url,{headers:{Accept:'application/json'}});if(!response.ok)throw new Error('HTTP '+response.status);
+     const data=await response.json();products=(Array.isArray(data.products)?data.products:[]).map(p=>{
+       const n=p.nutriments||{};const kcal=nutrientValue(n,['energy-kcal_100g','energy-kcal_value']);const kj=nutrientValue(n,['energy_100g']);const calories=kcal||kj/4.184;
+       const name=String(p.product_name||'').trim();if(!name||!calories)return null;
+       const brand=String(p.brands||'').trim();return {name:brand?`${name} · ${brand}`:name,calories,protein:nutrientValue(n,['proteins_100g']),carbs:nutrientValue(n,['carbohydrates_100g']),fat:nutrientValue(n,['fat_100g']),category:'Producto envasado',image:p.image_front_small_url||'',source:'online'};
+     }).filter(Boolean);
+   }catch(err){onlineMessage='No se pudo conectar con Open Food Facts en este momento.'}
+   const seen=new Set();const results=[...common,...products].filter(item=>{const key=normalizeText(item.name);if(seen.has(key))return false;seen.add(key);return true}).slice(0,16);
+   const box=$('foodSearchResults');box.innerHTML='';
+   if(!results.length){renderSearchState(onlineMessage?'No hubo resultados locales. '+onlineMessage:'No encontramos coincidencias. Probá otra palabra o ingresá el alimento manualmente.');return}
+   results.forEach(item=>box.append(createResultCard(item)));
+   if(onlineMessage){const note=document.createElement('div');note.className='searchnote';note.textContent=onlineMessage+' Se muestran los alimentos comunes que coincidieron, si los hubo.';box.append(note)}
+   const foot=document.createElement('div');foot.className='searchnote';foot.textContent='Los datos online provienen de una base colaborativa y pueden ser incompletos. Confirmá calorías y macros con el envase cuando corresponda.';box.append(foot);
+ }catch(err){renderSearchState('Ocurrió un problema al buscar. Revisá tu conexión e intentá de nuevo.')}
+ finally{btn.disabled=false;btn.textContent='Buscar'}
+}
+$('foodSearchBtn').addEventListener('click',searchFoods);$('foodSearchInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();searchFoods()}});
+
+// Escáner: usa BarcodeDetector cuando está disponible; en otros navegadores intenta cargar ZXing desde CDN.
+let scanStream=null, scanTimer=null, zxingReader=null, scanActive=false;
+function setScanStatus(message){$('scanStatus').textContent=message}
+function stopScanner(message='Cámara detenida.'){
+ scanActive=false;if(scanTimer){clearTimeout(scanTimer);scanTimer=null}
+ try{if(zxingReader&&typeof zxingReader.reset==='function')zxingReader.reset()}catch(e){}
+ if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null}
+ const video=$('scanVideo');try{video.pause()}catch(e){}video.srcObject=null;video.style.display='none';$('stopScanBtn').disabled=true;$('startScanBtn').disabled=false;
+ if(message)setScanStatus(message)
+}
+async function lookupBarcode(){
+ const code=$('barcodeInput').value.replace(/\s+/g,'').trim();if(!/^\d{8,14}$/.test(code)){setScanStatus('Ingresá un código EAN/UPC válido de entre 8 y 14 dígitos.');return}
+ const btn=$('lookupBarcodeBtn');btn.disabled=true;btn.textContent='Buscando…';setScanStatus('Consultando el producto en Open Food Facts…');
+ try{
+  const url='https://world.openfoodfacts.org/api/v2/product/'+encodeURIComponent(code)+'.json?fields=product_name,brands,code,nutriments,quantity,image_front_small_url';
+  const response=await fetch(url,{headers:{Accept:'application/json'}});if(!response.ok)throw new Error('HTTP '+response.status);
+  const data=await response.json();const p=data.product;
+  if(data.status!==1||!p){setScanStatus('No encontramos ese producto en Open Food Facts. Podés buscarlo por nombre o ingresarlo manualmente.');return}
+  const n=p.nutriments||{};const kcal=nutrientValue(n,['energy-kcal_100g']);const kj=nutrientValue(n,['energy_100g']);const calories=kcal||kj/4.184;
+  if(!p.product_name||!Number.isFinite(calories)||calories<=0){setScanStatus('Encontramos el producto, pero faltan sus calorías. Buscalo por nombre o completá los datos manualmente.');return}
+  const brand=String(p.brands||'').trim();const item={name:brand?`${p.product_name} · ${brand}`:p.product_name,calories,protein:nutrientValue(n,['proteins_100g']),carbs:nutrientValue(n,['carbohydrates_100g']),fat:nutrientValue(n,['fat_100g']),category:'Producto envasado · código '+code,image:p.image_front_small_url||'',source:'barcode'};
+  $('foodSearchResults').innerHTML='';$('foodSearchResults').append(createResultCard(item));useSearchFood(item);setScanStatus('Producto encontrado. Revisá la porción y los datos antes de guardarlo.');showPage('add');
+ }catch(e){setScanStatus('No se pudo consultar la base de datos. Revisá internet e intentá de nuevo.')}
+ finally{btn.disabled=false;btn.textContent='Buscar código'}
+}
+$('lookupBarcodeBtn').addEventListener('click',lookupBarcode);$('barcodeInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();lookupBarcode()}});
+async function loadZXing(){
+ if(window.ZXingBrowser)return window.ZXingBrowser;
+ await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='https://unpkg.com/@zxing/browser@0.1.5/umd/index.min.js';script.onload=resolve;script.onerror=()=>reject(new Error('No se pudo cargar el lector de códigos'));document.head.append(script)});
+ if(!window.ZXingBrowser)throw new Error('El lector de códigos no está disponible');return window.ZXingBrowser;
+}
+async function startScanner(){
+ if(!window.isSecureContext){setScanStatus('La cámara requiere una dirección HTTPS (o localhost en la PC). Primero publicá Athlyx con GitHub Pages; mientras tanto podés escribir el código manualmente.');return}
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){setScanStatus('Este navegador no permite abrir la cámara. Podés escribir el código manualmente.');return}
+ $('startScanBtn').disabled=true;$('stopScanBtn').disabled=false;setScanStatus('Solicitando permiso para usar la cámara…');
+ try{
+  scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});const video=$('scanVideo');video.srcObject=scanStream;video.style.display='block';await video.play();scanActive=true;
+  if('BarcodeDetector' in window){
+   let detector;try{detector=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128']})}catch(e){detector=new BarcodeDetector()}
+   setScanStatus('Apuntá la cámara al código de barras.');
+   const scan=async()=>{if(!scanActive)return;try{const codes=await detector.detect(video);if(codes.length&&codes[0].rawValue){$('barcodeInput').value=codes[0].rawValue;stopScanner('Código detectado. Buscando producto…');await lookupBarcode();return}}catch(e){}scanTimer=setTimeout(scan,250)};scan();
+  }else{
+   const ZX=await loadZXing();zxingReader=new ZX.BrowserMultiFormatReader();setScanStatus('Apuntá la cámara al código de barras.');
+   await zxingReader.decodeFromVideoElement(video,(result,err)=>{if(result&&scanActive){$('barcodeInput').value=result.getText();stopScanner('Código detectado. Buscando producto…');lookupBarcode()}});
+  }
+ }catch(e){stopScanner('No se pudo abrir la cámara. Revisá el permiso del navegador y que la página esté en HTTPS. También podés escribir el código manualmente.')}
+}
+$('startScanBtn').addEventListener('click',startScanner);$('stopScanBtn').addEventListener('click',()=>stopScanner());
+window.addEventListener('pagehide',()=>stopScanner('Cámara detenida.'));
+
+function renderDashboard(){
+ const s=sums(),g=state.goals,remaining=g.calories-s.calories,pct=Math.min(100,g.calories?100*s.calories/g.calories:0);
+ $('remaining').innerHTML=`${fmt(remaining)} <small>kcal</small>`;$('caloriePill').textContent=`${Math.round(pct)}% usado`;$('calorieProgress').style.width=`${pct}%`;$('consumedText').textContent=`${fmt(s.calories)} kcal consumidas`;$('goalText').textContent=`Meta ${fmt(g.calories)}`;
+ $('proteinVal').textContent=`${s.protein.toFixed(1).replace(/\.0$/,'')} g`;$('proteinGoal').textContent=`Meta ${fmt(g.protein)} g`;$('carbsVal').textContent=`${s.carbs.toFixed(1).replace(/\.0$/,'')} g`;$('carbsGoal').textContent=`Meta ${fmt(g.carbs)} g`;$('fatVal').textContent=`${s.fat.toFixed(1).replace(/\.0$/,'')} g`;$('fatGoal').textContent=`Meta ${fmt(g.fat)} g`;$('mealCount').textContent=`${s.count} alimento${s.count===1?'':'s'}`;
+ const list=$('mealList');list.innerHTML='';
+ meals.forEach(([name,emoji])=>{const foods=state.foods.filter(f=>f.date===today()&&f.meal===name);const total=foods.reduce((n,f)=>n+f.calories,0);const el=document.createElement('div');el.className='meal';el.innerHTML=`<div class="mealhead"><div class="mealicon">${emoji}</div><div class="mealinfo"><div class="mealname">${name}</div><div class="mealmeta">${foods.length} registro${foods.length===1?'':'s'}</div></div><div class="mealcal">${fmt(total)} <small>kcal</small></div></div>`;foods.forEach(f=>{const row=document.createElement('div');row.className='foodrow';const text=document.createElement('div');text.className='foodtext';const b=document.createElement('b');b.textContent=f.name;const small=document.createElement('small');small.textContent=`${f.amount||'Porción no indicada'} · P ${f.protein}g · C ${f.carbs}g · G ${f.fat}g`;text.append(b,small);const cal=document.createElement('span');cal.textContent=`${fmt(f.calories)} kcal`;const del=document.createElement('button');del.className='remove';del.setAttribute('aria-label','Eliminar '+f.name);del.textContent='×';del.onclick=()=>{if(confirm(`¿Eliminar ${f.name}?`)){state.foods=state.foods.filter(x=>x.id!==f.id);save();renderAll();toast('Alimento eliminado')}};row.append(text,cal,del);el.append(row)});list.append(el)});
+ $('waterCount').textContent=state.water[today()]||0;$('waterGoal').textContent=g.water;$('waterProgress').style.width=`${Math.min(100,100*(state.water[today()]||0)/g.water)}%`;
+}
+function renderHistory(){const dates=[...new Set(state.foods.map(f=>f.date))].sort((a,b)=>b.localeCompare(a));const el=$('historyList');el.innerHTML='';if(!dates.length){el.innerHTML='<div class="formcard empty">Todavía no hay registros. Añadí tu primera comida para ver el historial.</div>';return}dates.forEach(d=>{const s=sums(d),card=document.createElement('div');card.className='historyday';const left=document.createElement('div');const b=document.createElement('b');b.textContent=d===today()?'Hoy':new Date(d+'T12:00:00').toLocaleDateString('es-UY',{weekday:'short',day:'numeric',month:'short',year:'numeric'});const small=document.createElement('small');small.textContent=`${s.count} alimentos · P ${Math.round(s.protein)}g · C ${Math.round(s.carbs)}g · G ${Math.round(s.fat)}g`;left.append(b,small);const right=document.createElement('div');right.style.fontWeight='800';right.textContent=`${fmt(s.calories)} kcal`;card.append(left,right);el.append(card)})}
+function renderSettings(){const g=state.goals;$('goalCalories').value=g.calories;$('goalProtein').value=g.protein;$('goalCarbs').value=g.carbs;$('goalFat').value=g.fat;$('goalWater').value=g.water}
+function renderAll(){renderDashboard();renderHistory();renderSettings();$('todayLabel').textContent=new Date().toLocaleDateString('es-UY',{weekday:'long',day:'numeric',month:'long'})}
+function showPage(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page+'Page'));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));if(page==='add')$('foodDate').value=today();window.scrollTo(0,0)}
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+$('settingsShortcut').onclick=()=>showPage('settings');$('addFoodBtn').onclick=()=>showPage('add');
+$('foodForm').addEventListener('submit',e=>{e.preventDefault();const f={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name:$('foodName').value.trim(),meal:$('mealType').value,amount:$('foodAmount').value.trim(),calories:num('foodCalories'),protein:num('foodProtein'),carbs:num('foodCarbs'),fat:num('foodFat'),date:$('foodDate').value||today()};if(!f.name)return;state.foods.push(f);save();e.target.reset();$('foodAmount').dataset.autofill='false';['foodCalories','foodProtein','foodCarbs','foodFat'].forEach(id=>delete $(id).dataset.per100);$('foodProtein').value=0;$('foodCarbs').value=0;$('foodFat').value=0;$('foodDate').value=today();renderAll();showPage('dashboard');toast('¡Comida guardada!')});
+$('settingsForm').addEventListener('submit',e=>{e.preventDefault();state.goals={calories:Math.max(500,num('goalCalories')),protein:num('goalProtein'),carbs:num('goalCarbs'),fat:num('goalFat'),water:Math.max(1,num('goalWater'))};save();renderAll();toast('Objetivos actualizados')});
+$('waterPlus').onclick=()=>{state.water[today()]=Math.min(30,(state.water[today()]||0)+1);save();renderDashboard()};$('waterMinus').onclick=()=>{state.water[today()]=Math.max(0,(state.water[today()]||0)-1);save();renderDashboard()};$('waterReset').onclick=()=>{state.water[today()]=0;save();renderDashboard()};
+$('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='athlyx-backup-'+today()+'.json';a.click();URL.revokeObjectURL(url);toast('Copia de seguridad preparada')};
+$('clearDataBtn').onclick=()=>{if(confirm('Esto borrará todos los alimentos, objetivos y registros de agua guardados en este navegador. ¿Continuar?')){localStorage.removeItem(KEY);state={...defaults,goals:{...defaults.goals},foods:[],water:{}};save();renderAll();toast('Datos borrados')}};
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+renderAll();
+</script>
+</body>
+</html>

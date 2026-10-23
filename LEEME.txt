@@ -1,0 +1,31 @@
+ATHLYX — ETAPA 3
+Diario nutricional + buscador de alimentos + escáner de códigos de barras
+
+PROBAR EN LA PC
+1. Extraé el ZIP en una carpeta nueva.
+2. Abrí la carpeta athlyx y hacé doble clic en index.html.
+3. Probá el buscador por nombre. El diario y sus registros siguen guardándose localmente en ese navegador.
+4. En un archivo abierto como file://, el navegador normalmente no permite usar la cámara. El campo “Código de barras” permite probar la búsqueda ingresando manualmente un EAN/UPC de 8 a 14 dígitos.
+
+INSTALAR ATHLYX EN IPHONE (GRATIS, MEDIANTE GITHUB PAGES)
+Necesitás una cuenta de GitHub y conexión a internet. GitHub Pages publica estos archivos con HTTPS, necesario para la cámara.
+1. En la PC, entrá a https://github.com y creá una cuenta/iniciá sesión.
+2. Creá un repositorio nuevo. Podés llamarlo athlyx-app. Para empezar, podés elegir Public y no agregar README ni otros archivos iniciales.
+3. En el repositorio, elegí Add file > Upload files.
+4. Abrí la carpeta athlyx que salió del ZIP y arrastrá al repositorio LOS ARCHIVOS QUE ESTÁN DENTRO de esa carpeta: index.html, manifest.json, sw.js, athlyx-192.png y athlyx-512.png. No subas solamente la carpeta contenedora.
+5. Confirmá con Commit changes.
+6. Entrá a Settings > Pages. En “Build and deployment”, elegí “Deploy from a branch”; seleccioná la rama main y la carpeta /(root), y guardá.
+7. Esperá unos minutos. En Settings > Pages aparecerá una dirección parecida a https://TU-USUARIO.github.io/athlyx-app/ . Abrila en la PC primero y verificá que funcione.
+8. En el iPhone, abrí esa dirección con Safari. Tocá el botón Compartir (cuadrado con flecha hacia arriba), elegí “Añadir a pantalla de inicio”, confirmá el nombre Athlyx y tocá Añadir.
+9. Abrí Athlyx desde el nuevo ícono. En Registrar > Escanear código de barras, tocá Abrir cámara y aceptá el permiso de cámara.
+
+IMPORTANTE SOBRE TUS DATOS
+- Los datos se guardan en el almacenamiento local del navegador, no en una cuenta online.
+- Los datos que tenías en el archivo abierto en la PC no aparecen automáticamente en la web publicada ni en el iPhone: son almacenamientos separados. Usá “Exportar mis datos (JSON)” para guardar una copia de seguridad. Todavía no existe una función para importar esa copia automáticamente.
+- Open Food Facts es una base colaborativa: no todos los productos están incluidos y sus valores pueden estar incompletos. Verificá el envase.
+- El escáner necesita HTTPS, permiso de cámara e internet para consultar el producto. Si no encuentra el producto, podés buscarlo por nombre o cargarlo manualmente.
+- El lector ZXing se carga desde un CDN cuando el navegador no tiene BarcodeDetector integrado; por eso esa alternativa también requiere internet.
+- Esta app es un proyecto personal, no un dispositivo médico ni asesoramiento nutricional profesional.
+
+PRIVACIDAD
+Las búsquedas de productos y códigos se consultan en Open Food Facts. El lector alternativo puede cargar su biblioteca desde un CDN. El diario no se envía a esos servicios; permanece en el almacenamiento local de ese navegador.
